@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('can_view_orders')->default(false);
+            $table->boolean('can_create_products')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
