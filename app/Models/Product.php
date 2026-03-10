@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -19,9 +20,14 @@ class Product extends Model
 
     public function sites(): BelongsToMany
     {
-        return $this->belongsToMany(Site::class, 'product_site_prices')
+        return $this->belongsToMany(Site::class)
             ->using(ProductSitePrice::class)
             ->withPivot('price');
+    }
+
+    public function sitePrice(): HasOne
+    {
+        return $this->hasOne(ProductSitePrice::class);
     }
 
     public function orderItems(): HasMany
