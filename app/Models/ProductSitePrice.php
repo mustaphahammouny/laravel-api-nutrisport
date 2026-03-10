@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class ProductSitePrice extends Pivot
 {
+    protected $table = 'product_site_prices';
+
     protected $fillable = [
         'product_id',
         'site_id',
