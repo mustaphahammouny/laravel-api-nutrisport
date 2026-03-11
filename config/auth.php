@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Customer;
+use App\Models\User;
+
 return [
 
     /*
@@ -40,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'front-api' => [
+            'driver' => 'jwt',
+            'provider' => 'customers',
+        ],
     ],
 
     /*
@@ -62,13 +69,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => Customer::class,
+        ],
     ],
 
     /*
@@ -95,6 +101,12 @@ return [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
+            'throttle' => 60,
+        ],
+        'customers' => [
+            'provider' => 'customers',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 6 * 60,
             'throttle' => 60,
         ],
     ],
