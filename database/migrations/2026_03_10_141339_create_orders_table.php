@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('shipping_full_address');
             $table->string('shipping_city');
             $table->string('shipping_country');
-            $table->decimal('subtotal', 10, 2);
             $table->decimal('total', 10, 2);
             $table->decimal('paid_amount', 10, 2)->default(0);
             $table->timestamps();

@@ -19,6 +19,7 @@ class CustomerSeeder extends Seeder
             ->create([
                 'name' => "Customer {$site->code}",
                 'email' => "customer-{$site->code}@example.com",
+                'email_verified_at' => now(),
                 'password' => Hash::make('password'),
             ]));
     }

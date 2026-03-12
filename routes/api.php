@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Front\AuthController;
+use App\Http\Controllers\Front\OrderController;
 use App\Http\Controllers\Front\PasswordController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Front\ProfileController;
@@ -23,13 +24,24 @@ Route::middleware('site')
                     });
             });
 
-        Route::prefix('profile')
+        Route::middleware('auth:front-api')
             ->group(function () {
-                Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
-                Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
-            });
+                Route::prefix('profile')
+                    ->group(function () {
+                        Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
+                        Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
+                    });
 
-        Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+                Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+                Route::prefix('commandes')
+                    ->group(function () {
+                        Route::get('/', [OrderController::class, 'index'])->name('order.index');
+                        Route::get('{order}', [OrderController::class, 'show'])
+                            ->name('order.show')
+                            ->can('view', 'order');
+                    });
+            });
 
         Route::prefix('produits')
             ->group(function () {
