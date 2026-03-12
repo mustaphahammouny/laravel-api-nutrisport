@@ -24,6 +24,11 @@ class Customer extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
     public function getJWTIdentifier(): mixed
     {
         return $this->getKey();
