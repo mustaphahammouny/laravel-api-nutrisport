@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Customer extends Authenticatable
+class Customer extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -22,6 +23,21 @@ class Customer extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function getJWTIdentifier(): mixed
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(): array
+    {
+        return [];
+    }
 
     public function site(): BelongsTo
     {
