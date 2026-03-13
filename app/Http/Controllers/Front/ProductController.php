@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -24,11 +23,7 @@ class ProductController extends Controller
 
     public function show(Request $request, Product $product)
     {
-        $currentSite = current_site();
-
-        $product->load([
-            'sitePrice' => fn(HasOne $query) => $query->where('site_id', $currentSite->id),
-        ]);
+        $product->load('sitePrice');
 
         return ProductResource::make($product);
     }

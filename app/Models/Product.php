@@ -27,7 +27,10 @@ class Product extends Model
 
     public function sitePrice(): HasOne
     {
-        return $this->hasOne(ProductSitePrice::class);
+        $currentSite = current_site();
+
+        return $this->hasOne(ProductSitePrice::class)
+            ->where('site_id', $currentSite->id);
     }
 
     public function orderItems(): HasMany

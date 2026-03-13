@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCartRequest;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class CartController extends Controller
 {
@@ -27,9 +28,11 @@ class CartController extends Controller
     {
         $data = $request->validated();
 
+        $items = Arr::get($data, 'items');
+
         $cartToken = $request->attributes->get('cart_token');
 
-        $cart = $this->cartService->update($cartToken, $data);
+        $cart = $this->cartService->update($cartToken, $items);
 
         return response()->json($cart);
     }

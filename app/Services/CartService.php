@@ -20,18 +20,14 @@ class CartService
 
     public function put(string $token, array $cart): void
     {
-        $ttl = config('cart.cache_ttl_days');
+        $ttl = config('cart.cache_ttl');
 
         $this->cache->put($token, $cart, $ttl);
     }
 
     public function add(string $token, Product $product, int $quantity = 1): array
     {
-        $currentSite = current_site();
-
-        $product->loadMissing([
-            'sitePrice' => fn($query) => $query->were('site_id', $currentSite->id),
-        ]);
+        $product->loadMissing('sitePrice');
 
         $cart = $this->get($token);
 
@@ -57,7 +53,8 @@ class CartService
     {
         $cart = $this->get($token);
 
-        foreach ($items as $productId => $item) {
+        foreach ($items as $item) {
+            $productId = Arr::get($item, 'product_id');
             $productExists = Arr::has($cart, "items.{$productId}");
 
             if (!$productExists) {
