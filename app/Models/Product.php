@@ -20,7 +20,7 @@ class Product extends Model
 
     public function sites(): BelongsToMany
     {
-        return $this->belongsToMany(Site::class)
+        return $this->belongsToMany(Site::class, 'product_site_prices')
             ->using(ProductSitePrice::class)
             ->withPivot('price');
     }
