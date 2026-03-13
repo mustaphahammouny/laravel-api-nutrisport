@@ -18,7 +18,7 @@ Route::middleware('site')
                         Route::post('login', [AuthController::class, 'login'])->name('auth.login');
                     });
 
-                Route::middleware('auth:front-api')
+                Route::middleware(['auth:front-api', 'customer'])
                     ->group(function () {
                         Route::get('me', [AuthController::class, 'me'])->name('auth.me');
                         Route::post('refresh', [AuthController::class, 'refresh'])->name('auth.refresh');
@@ -26,7 +26,7 @@ Route::middleware('site')
                     });
             });
 
-        Route::middleware('auth:front-api')
+        Route::middleware(['auth:front-api', 'customer'])
             ->group(function () {
                 Route::prefix('profile')
                     ->group(function () {
@@ -39,6 +39,9 @@ Route::middleware('site')
                 Route::prefix('commandes')
                     ->group(function () {
                         Route::get('/', [OrderController::class, 'index'])->name('order.index');
+                        Route::post('/', [OrderController::class, 'store'])
+                            ->name('order.store')
+                            ->middleware('cart');
                         Route::get('{order}', [OrderController::class, 'show'])
                             ->name('order.show')
                             ->can('view', 'order');
