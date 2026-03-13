@@ -31,7 +31,7 @@ class StoreCartItemRequest extends FormRequest
 
         return [
             'quantity' => [
-                'required',
+                'nullable',
                 'integer',
                 "between:1,{$product->stock}",
             ],
