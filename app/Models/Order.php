@@ -19,7 +19,6 @@ class Order extends Model
         'shipping_full_address',
         'shipping_city',
         'shipping_country',
-        'subtotal',
         'total',
         'paid_amount',
     ];
@@ -27,7 +26,6 @@ class Order extends Model
     protected $casts = [
         'status' => OrderStatus::class,
         'payment_method' => PaymentMethod::class,
-        'subtotal' => 'decimal:2',
         'total' => 'decimal:2',
         'paid_amount' => 'decimal:2',
     ];

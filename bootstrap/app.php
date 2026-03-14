@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\InitializeSite;
+use App\Http\Middleware\InsureCustomerBelongToSite;
 use App\Http\Middleware\ResolveCart;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'site' => InitializeSite::class,
+            'customer' => InsureCustomerBelongToSite::class,
             'cart' => ResolveCart::class,
         ]);
     })

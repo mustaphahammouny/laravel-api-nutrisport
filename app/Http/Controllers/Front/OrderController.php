@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Actions\CreateOrderAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
@@ -26,6 +29,19 @@ class OrderController extends Controller
             ->paginate(10);
 
         return response()->json(OrderResource::collection($orders));
+    }
+
+    public function store(StoreOrderRequest $request, CreateOrderAction $createOrderAction): JsonResponse
+    {
+        $data = $request->validated();
+
+        $cartToken = $request->attributes->get('cart_token');
+
+        $order = $createOrderAction->handle($this->currentCustomer, $cartToken, $data);
+
+        $order->load('items');
+
+        return response()->json(OrderResource::make($order), Response::HTTP_CREATED);
     }
 
     public function show(Request $request, Order $order): JsonResponse
