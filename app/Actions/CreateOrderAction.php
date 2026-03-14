@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Enums\OrderStatus;
+use App\Events\OrderCreated;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\ProductSitePrice;
@@ -106,6 +107,8 @@ class CreateOrderAction
         });
 
         $this->cartService->clear($cartToken);
+
+        event(new OrderCreated($order));
 
         return $order;
     }
