@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Back\AuthController;
+use App\Http\Controllers\Back\OrderController;
 use App\Http\Controllers\Back\PasswordController;
 use App\Http\Controllers\Back\ProfileController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('backoffice')
@@ -31,5 +33,15 @@ Route::prefix('backoffice')
                     });
 
                 Route::put('password', [PasswordController::class, 'update'])->name('back.password.update');
+
+                Route::prefix('commandes')
+                    ->group(function () {
+                        Route::get('/', [OrderController::class, 'index'])
+                            ->name('back.order.index')
+                            ->can('viewAny', Order::class);
+                        Route::get('{order}', [OrderController::class, 'show'])
+                            ->name('back.order.show')
+                            ->can('view', 'order');
+                    });
             });
     });

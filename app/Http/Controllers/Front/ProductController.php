@@ -7,10 +7,11 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
-    public function index(Request $request): JsonResponse
+    public function index(Request $request): AnonymousResourceCollection
     {
         $currentSite = current_site();
 
@@ -19,7 +20,7 @@ class ProductController extends Controller
             ->latest()
             ->paginate(10);
 
-        return response()->json(ProductResource::collection($products));
+        return ProductResource::collection($products);
     }
 
     public function show(Request $request, Product $product): JsonResponse

@@ -25,6 +25,7 @@ class OrderResource extends JsonResource
             'total' => $this->total,
             'paid_amount' => $this->paid_amount,
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
+            'site' => SiteResource::make($this->whenLoaded('site')),
             'created_at' => $this->created_at,
         ];
     }
