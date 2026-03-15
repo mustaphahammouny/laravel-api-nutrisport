@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePasswordRequest;
@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Hash;
 class PasswordController extends Controller
 {
     public function __construct(
-        #[CurrentUser('front-api')] protected $currentCustomer,
+        #[CurrentUser('back-api')] protected $currentUser,
     ) {}
 
     public function update(UpdatePasswordRequest $request): JsonResponse
     {
-        $this->currentCustomer->update([
+        $this->currentUser->update([
             'password' => Hash::make($request->string('password')),
         ]);
 

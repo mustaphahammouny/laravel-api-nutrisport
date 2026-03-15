@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Front;
 
 use App\Enums\PaymentMethod;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -9,7 +9,6 @@ use Illuminate\Validation\Rule;
 
 class StoreOrderRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *

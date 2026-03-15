@@ -43,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'back-api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
         'front-api' => [
             'driver' => 'jwt',
             'provider' => 'customers',
@@ -100,7 +104,7 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
-            'expire' => 60,
+            'expire' => 8 * 60,
             'throttle' => 60,
         ],
         'customers' => [

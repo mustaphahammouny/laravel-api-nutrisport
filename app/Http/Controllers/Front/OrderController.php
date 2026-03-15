@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Front;
 
 use App\Actions\CreateOrderAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\Front\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
@@ -18,7 +19,7 @@ class OrderController extends Controller
         #[CurrentUser('front-api')] protected $currentCustomer,
     ) {}
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request): AnonymousResourceCollection
     {
         $currentSite = current_site();
 
@@ -28,7 +29,7 @@ class OrderController extends Controller
             ->latest()
             ->paginate(10);
 
-        return response()->json(OrderResource::collection($orders));
+        return OrderResource::collection($orders);
     }
 
     public function store(StoreOrderRequest $request, CreateOrderAction $createOrderAction): JsonResponse

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class SiteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,9 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'stock' => $this->stock,
-            'price' => $this->whenLoaded('sitePrice', fn() => $this->sitePrice->price),
-            'sites' => SiteResource::collection($this->whenLoaded('sites')),
+            'code' => $this->code,
+            'domain' => $this->domain,
+            'price' => $this->whenPivotLoaded('product_site_prices', fn () => $this->pivot->price),
         ];
     }
 }

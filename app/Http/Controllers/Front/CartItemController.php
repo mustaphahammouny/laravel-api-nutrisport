@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCartItemRequest;
+use App\Http\Requests\Front\StoreCartItemRequest;
 use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;

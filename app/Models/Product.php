@@ -25,6 +25,11 @@ class Product extends Model
             ->withPivot('price');
     }
 
+    public function sitePrices(): HasMany
+    {
+        return $this->hasMany(ProductSitePrice::class);
+    }
+
     public function sitePrice(): HasOne
     {
         $currentSite = current_site();

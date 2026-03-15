@@ -15,6 +15,8 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
+            'can_view_orders' => true,
+            'can_create_products' => true,
         ]);
     }
 }
