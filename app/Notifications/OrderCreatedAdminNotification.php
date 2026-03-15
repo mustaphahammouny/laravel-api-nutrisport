@@ -49,8 +49,6 @@ class OrderCreatedAdminNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            'order_id' => $this->order->id,
-        ];
+        return [];
     }
 }
