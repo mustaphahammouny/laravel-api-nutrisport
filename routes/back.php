@@ -3,8 +3,10 @@
 use App\Http\Controllers\Back\AuthController;
 use App\Http\Controllers\Back\OrderController;
 use App\Http\Controllers\Back\PasswordController;
+use App\Http\Controllers\Back\ProductController;
 use App\Http\Controllers\Back\ProfileController;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('backoffice')
@@ -42,6 +44,15 @@ Route::prefix('backoffice')
                         Route::get('{order}', [OrderController::class, 'show'])
                             ->name('back.order.show')
                             ->can('view', 'order');
+                    });
+
+                Route::prefix('produits')
+                    ->group(function () {
+                        Route::get('/', [ProductController::class, 'index'])->name('back.product.index');
+                        Route::post('/', [ProductController::class, 'store'])
+                            ->name('back.product.store')
+                            ->can('create', Product::class);
+                        Route::get('{product}', [ProductController::class, 'show'])->name('back.product.show');
                     });
             });
     });

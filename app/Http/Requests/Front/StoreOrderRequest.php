@@ -9,7 +9,6 @@ use Illuminate\Validation\Rule;
 
 class StoreOrderRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *

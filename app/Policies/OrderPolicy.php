@@ -8,6 +8,11 @@ use App\Models\User;
 
 class OrderPolicy
 {
+    public function before(User $user): bool
+    {
+        return $user->isAdmin();
+    }
+
     public function viewAny(User $actor): bool
     {
         return $actor->can_view_orders;

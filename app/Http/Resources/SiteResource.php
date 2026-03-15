@@ -19,6 +19,7 @@ class SiteResource extends JsonResource
             'name' => $this->name,
             'code' => $this->code,
             'domain' => $this->domain,
+            'price' => $this->whenPivotLoaded('product_site_prices', fn () => $this->pivot->price),
         ];
     }
 }
