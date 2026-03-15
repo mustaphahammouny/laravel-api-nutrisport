@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Actions\CreateOrderAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\Front\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Container\Attributes\CurrentUser;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Front;
 
 use App\Enums\PaymentMethod;
 use Illuminate\Contracts\Validation\ValidationRule;
