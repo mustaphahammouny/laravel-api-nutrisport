@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\JsonResponse;
+use App\Services\Response\Factories\ResponseFactory;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
-    public function index(Request $request): AnonymousResourceCollection
+    public function __construct(protected ResponseFactory $responseFactory) {}
+
+    public function index(Request $request): Response
     {
         $currentSite = current_site();
 
@@ -20,13 +22,25 @@ class ProductController extends Controller
             ->latest()
             ->paginate(10);
 
-        return ProductResource::collection($products);
+        $collection = ProductResource::collection($products)
+            ->response()
+            ->getData(true);
+
+        return $this->responseFactory
+            ->make($request)
+            ->toResponse($collection);
     }
 
-    public function show(Request $request, Product $product): JsonResponse
+    public function show(Request $request, Product $product): Response
     {
         $product->load('sitePrice');
 
-        return response()->json(ProductResource::make($product));
+        $resource = ProductResource::make($product)
+            ->response()
+            ->getData(true);
+
+        return $this->responseFactory
+            ->make($request)
+            ->toResponse($resource);
     }
 }
